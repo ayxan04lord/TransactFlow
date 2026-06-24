@@ -1,0 +1,49 @@
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 300; padding: 20px;
+}
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px 32px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.5);
+}
+
+.header { text-align: center; margin-bottom: 28px; }
+.logo   { font-size: 40px; display: block; margin-bottom: 12px; }
+.title  { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+.sub    { font-size: 14px; color: var(--text2); }
+
+.steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.stepIcon  { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.stepTitle { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+.stepDesc  { font-size: 12px; color: var(--text2); }
+
+.btn {
+  width: 100%;
+  background: linear-gradient(135deg, #0ea5e9, #3b82f6);
+  color: #fff; border: none;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 15px; font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.btn:hover { opacity: 0.9; }

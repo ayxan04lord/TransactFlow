@@ -1,92 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import TransactionList from './TransactionList';
-import TransactionForm from './TransactionForm';
-import './App.css';
+import { useEffect } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Toaster } from 'react-hot-toast';
+import LoginPage    from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
+import DashboardPage from './pages/DashboardPage';
+import ProfilePage  from './pages/ProfilePage';
 
-function App() {
-    const [transactions, setTransactions] = useState([]);
-    const [transaction, setTransaction] = useState({ from: '', to: '', amount: '' });
-    const [editId, setEditId] = useState(null);
-    const [showAddForm, setShowAddForm] = useState(false);
-    const [showEditForm, setShowEditForm] = useState(false);
+const PrivateRoute = ({ children }) => {
+  const token = useSelector((s) => s.auth.token);
+  return token ? children : <Navigate to="/login" replace />;
+};
 
-    useEffect(() => {
-        fetchTransactions();
-    }, []);
+const PublicRoute = ({ children }) => {
+  const token = useSelector((s) => s.auth.token);
+  return token ? <Navigate to="/" replace /> : children;
+};
 
-    const fetchTransactions = () => {
-        fetch("https://acb-api.algoritmika.org/api/transaction")
-            .then(res => res.json())
-            .then(data => setTransactions(data));
-    }
+export default function App() {
+  const theme = useSelector((s) => s.ui.theme);
 
-    const handleChange = (e) => {
-        setTransaction({ ...transaction, [e.target.name]: e.target.value });
-    }
+  useEffect(() => {
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
 
-    const handleAddTransaction = () => {
-        fetch(`https://acb-api.algoritmika.org/api/transaction`, {
-            method: 'POST',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(transaction)
-        }).then(() => {
-            fetchTransactions();
-            setTransaction({ from: '', to: '', amount: '' });
-            setShowAddForm(false);
-        });
-    }
-
-    const handleEditTransaction = () => {
-        fetch(`https://acb-api.algoritmika.org/api/transaction/${editId}`, {
-            method: 'PUT',
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: JSON.stringify(transaction)
-        }).then(() => {
-            fetchTransactions();
-            setEditId(null);
-            setTransaction({ from: '', to: '', amount: '' });
-            setShowEditForm(false);
-        });
-    }
-
-    const handleEdit = (transaction) => {
-        setEditId(transaction.id);
-        setTransaction({ from: transaction.from, to: transaction.to, amount: transaction.amount });
-        setShowEditForm(true);
-        setShowAddForm(false);
-    }
-
-    const handleDelete = (id) => {
-        fetch(`https://acb-api.algoritmika.org/api/transaction/${id}`, {
-            method: "DELETE"
-        }).then(() => {
-            fetchTransactions();
-        });
-    }
-
-    return (
-        <div className="container">
-            <div className="heading">
-                <h1>Transaction</h1>
-            </div>
-            <TransactionList transactions={transactions} handleEdit={handleEdit} handleDelete={handleDelete} />
-            <div className="addBtn">
-                <button onClick={() => { setShowAddForm(!showAddForm); setShowEditForm(false); setTransaction({ from: '', to: '', amount: '' }); }}>Add +</button>
-            </div>
-            {(showAddForm || showEditForm) &&
-                <TransactionForm
-                    transaction={transaction}
-                    handleSubmit={showEditForm ? handleEditTransaction : handleAddTransaction}
-                    handleChange={handleChange}
-                    buttonText={showEditForm ? 'Save' : '+'}
-                />
-            }
-        </div>
-    );
+  return (
+    <>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: { background: 'var(--bg2)', color: 'var(--text)', border: '1px solid var(--border)' },
+          success: { iconTheme: { primary: '#4ade80', secondary: '#fff' } },
+          error:   { iconTheme: { primary: '#ef4444', secondary: '#fff' } },
+        }}
+      />
+      <Routes>
+        <Route path="/login"    element={<PublicRoute><LoginPage /></PublicRoute>} />
+        <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+        <Route path="/"         element={<PrivateRoute><DashboardPage /></PrivateRoute>} />
+        <Route path="/profile"  element={<PrivateRoute><ProfilePage /></PrivateRoute>} />
+        <Route path="*"         element={<Navigate to="/" replace />} />
+      </Routes>
+    </>
+  );
 }
-
-export default App;

@@ -1,11 +1,37 @@
-*,
-*::before,
-*::after {
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:        #0f172a;
+  --bg2:       #1e293b;
+  --border:    #334155;
+  --text:      #f1f5f9;
+  --text2:     #94a3b8;
+  --text3:     #64748b;
+  --accent:    #38bdf8;
+  --accent2:   #3b82f6;
+  --green:     #4ade80;
+  --red:       #ef4444;
+  --purple:    #a78bfa;
+  --yellow:    #fbbf24;
+}
+
+body[data-theme='light'] {
+  --bg:        #f8fafc;
+  --bg2:       #ffffff;
+  --border:    #e2e8f0;
+  --text:      #0f172a;
+  --text2:     #475569;
+  --text3:     #94a3b8;
 }
 
 body {
-    font-family: "Helvetica", sans-serif;
+  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  transition: background 0.3s, color 0.3s;
 }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }

@@ -1,0 +1,91 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  padding: 20px;
+}
+
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  justify-content: center;
+}
+.logoIcon { font-size: 28px; }
+.logoText  { font-size: 22px; font-weight: 700; color: var(--accent); letter-spacing: -0.5px; }
+
+.title    { font-size: 24px; font-weight: 700; color: var(--text); margin-bottom: 6px; text-align: center; }
+.subtitle { font-size: 14px; color: var(--text2); text-align: center; margin-bottom: 28px; }
+
+.errorBanner {
+  background: rgba(239,68,68,0.12);
+  border: 1px solid rgba(239,68,68,0.35);
+  color: #fca5a5;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form   { display: flex; flex-direction: column; gap: 16px; }
+.field  { display: flex; flex-direction: column; gap: 6px; }
+.label  { font-size: 13px; font-weight: 500; color: var(--text2); }
+
+.input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input::placeholder { color: var(--text3); }
+.input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(56,189,248,0.12); }
+
+.btn {
+  background: linear-gradient(135deg, #0ea5e9, var(--accent2));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 13px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: opacity 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+}
+.btn:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.switchText { text-align: center; margin-top: 22px; font-size: 13px; color: var(--text2); }
+.switchLink { color: var(--accent); text-decoration: none; font-weight: 600; }
+.switchLink:hover { text-decoration: underline; }
